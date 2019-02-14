@@ -1,0 +1,64 @@
+{
+    "name": "exolnet/laravel-heartbeat",
+    "description": "Periodically schedule a job to send a heartbeat to a monitoring system.",
+    "keywords": [
+        "exolnet",
+        "laravel",
+        "laravel-heartbeat"
+    ],
+    "homepage": "https://github.com/eXolnet/laravel-heartbeat",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Alexandre D'Eschambeault",
+            "homepage": "https://www.exolnet.com",
+            "role": "Developer"
+        },
+        {
+            "name": "Simon Gaudreau",
+            "homepage": "https://www.exolnet.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.1"
+    },
+    "require-dev": {
+        "mockery/mockery": "^1.0",
+        "phpunit/phpunit": "^6.0",
+        "orchestra/testbench" : "^3.5",
+        "squizlabs/php_codesniffer": "^3.3.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Exolnet\\Heartbeat\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Exolnet\\Heartbeat\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "lint": "vendor/bin/phpcs -p --standard=PSR2 config src tests",
+        "lint-fix": "vendor/bin/phpcbf -p --standard=PSR2 config src tests",
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Exolnet\\Heartbeat\\HeartbeatServiceProvider"
+            ],
+            "aliases": {
+                "Skeleton": "Exolnet\\Heartbeat\\HeartbeatFacade"
+            }
+        }
+    },
+    "suggest": {
+        "guzzlehttp/guzzle": "Required to send Http signals (~6.0)."
+    }
+}
