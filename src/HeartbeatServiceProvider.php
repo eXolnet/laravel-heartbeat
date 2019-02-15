@@ -35,8 +35,8 @@ class HeartbeatServiceProvider extends ServiceProvider
      */
     protected function scheduleQueueCheck()
     {
-        $preset = config('heartbeat.schedule.preset');
-        $cron   = config('heartbeat.schedule.cron');
+        $preset = config('heartbeat.job_schedule.preset');
+        $cron   = config('heartbeat.job_schedule.cron');
 
         if (! $preset || ! $cron) {
             return;
