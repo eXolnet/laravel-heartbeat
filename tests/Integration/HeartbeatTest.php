@@ -3,6 +3,7 @@
 namespace Exolnet\Heartbeat\Tests\Integration;
 
 use Carbon\Carbon;
+use Exolnet\Heartbeat\HeartbeatException;
 use Exolnet\Heartbeat\HeartbeatFacade as Heartbeat;
 use GuzzleHttp\Client as HttpClient;
 use Illuminate\Contracts\Filesystem\Factory;
@@ -21,6 +22,16 @@ class HeartbeatTest extends TestCase
         $heartbeat2 = $this->app->make(Heartbeat::class);
 
         $this->assertEquals($heartbeat1, $heartbeat2);
+    }
+
+    /**
+     * @return void
+     */
+    public function testDefaultDriverThrowAnException()
+    {
+        $this->expectException(HeartbeatException::class);
+
+        Heartbeat::driver();
     }
 
     /**
