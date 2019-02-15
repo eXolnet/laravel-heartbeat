@@ -27,9 +27,46 @@ And the facade to the ``facades`` array in `config/app.php`:
 'Heartbeat' => Exolnet\Heartbeat\HeartbeatFacade::class
 ```
 
+## Config
+
+### Config Files
+
+In order to edit the default configuration (where for e.g. you can find `schedule` and `presets`) for this package you may execute:
+
+```
+php artisan vendor:publish --provider="Exolnet\Heartbeat\HeartbeatServiceProvider"
+```
+
+After that, `config/heartbeat.php` will be created. Inside this file you will find all the fields that can be edited in this package.
+
+The default configuration file can be found here : [config/heartbeat.php](config/heartbeat.php)
+
 ## Usage
 
-Explain how to use your package.
+Laravel Heartbeat should be working right after the service provider is loaded.
+
+### Default
+By default Laravel Heartbeat is configure to use queue and the scheduler to create heartbeats. It will store it's files on Laravel's public disk. If you want a dedicated disk you should add a disk to app/config/filesystems.php and change the `disk` option in the `Queue preset` 
+
+```
+...
+'presets' => [
+    ...
+    'queue' => [
+        ...
+        'disk' => 'local',
+        ...
+    ],
+    ...
+```
+
+### Available Channels
+#### Disk
+Channel used to store heartbeats in a Laravel Filesystem disk.
+#### File
+Channel used to store heartbeats in a file
+#### Http
+Channel used to make a heartbeat by calling a url
 
 ## Testing
 
