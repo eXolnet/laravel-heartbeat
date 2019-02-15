@@ -22,4 +22,19 @@ class HeartbeatTest extends TestCase
 
         Heartbeat::file('/tmp/heartbeat');
     }
+
+    public function testPresetSignal()
+    {
+        config()->set('heartbeat.presets.test', [
+            'channel' => 'file',
+            'file' => '/tmp/heartbeat',
+        ]);
+
+        $filesystem = m::mock(FilesystemAdapter::class);
+        $filesystem->shouldReceive('put')->with('/tmp/heartbeat', '')->once();
+
+        $this->app[Filesystem::class] = $filesystem;
+
+        Heartbeat::preset('test');
+    }
 }

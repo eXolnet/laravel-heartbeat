@@ -56,6 +56,16 @@ class HeartbeatManager extends Manager
     }
 
     /**
+     * Create an instance of the preset driver.
+     *
+     * @return \Exolnet\Heartbeat\Channels\PresetChannel
+     */
+    protected function createPresetDriver()
+    {
+        return $this->app->make(Channels\PresetChannel::class);
+    }
+
+    /**
      * Get the default driver name.
      *
      * @return string
