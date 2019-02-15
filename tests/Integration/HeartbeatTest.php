@@ -13,6 +13,17 @@ class HeartbeatTest extends TestCase
     /**
      * @return void
      */
+    public function testHeartbeatIsASingleton()
+    {
+        $heartbeat1 = $this->app->make(Heartbeat::class);
+        $heartbeat2 = $this->app->make(Heartbeat::class);
+
+        $this->assertEquals($heartbeat1, $heartbeat2);
+    }
+
+    /**
+     * @return void
+     */
     public function testFileSignal()
     {
         $filesystem = m::mock(FilesystemAdapter::class);
@@ -36,6 +47,9 @@ class HeartbeatTest extends TestCase
         Heartbeat::http('https://beats.envoyer.io/heartbeat/example');
     }
 
+    /**
+     * @return void
+     */
     public function testPresetSignal()
     {
         config()->set('heartbeat.presets.test', [
