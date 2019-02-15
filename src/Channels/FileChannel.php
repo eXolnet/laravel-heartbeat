@@ -25,6 +25,6 @@ class FileChannel
      */
     public function signal($file)
     {
-        $this->filesystem->put($file, '');
+        $this->filesystem->put($file, now()->toDateTimeString());
     }
 }

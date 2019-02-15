@@ -46,8 +46,10 @@ class HeartbeatTest extends TestCase
      */
     public function testFileSignal()
     {
+        Carbon::setTestNow('2019-02-15 08:00:00');
+
         $filesystem = m::mock(FilesystemAdapter::class);
-        $filesystem->shouldReceive('put')->with('/tmp/heartbeat', '')->once();
+        $filesystem->shouldReceive('put')->with('/tmp/heartbeat', '2019-02-15 08:00:00')->once();
 
         $this->app[Filesystem::class] = $filesystem;
 
@@ -72,13 +74,15 @@ class HeartbeatTest extends TestCase
      */
     public function testPresetSignal()
     {
+        Carbon::setTestNow('2019-02-15 08:00:00');
+
         config()->set('heartbeat.presets.test', [
             'channel' => 'file',
             'file' => '/tmp/heartbeat',
         ]);
 
         $filesystem = m::mock(FilesystemAdapter::class);
-        $filesystem->shouldReceive('put')->with('/tmp/heartbeat', '')->once();
+        $filesystem->shouldReceive('put')->with('/tmp/heartbeat', '2019-02-15 08:00:00')->once();
 
         $this->app[Filesystem::class] = $filesystem;
 
@@ -87,8 +91,10 @@ class HeartbeatTest extends TestCase
 
     public function testCommandNow()
     {
+        Carbon::setTestNow('2019-02-15 08:00:00');
+
         $filesystem = m::mock(FilesystemAdapter::class);
-        $filesystem->shouldReceive('put')->with('/tmp/heartbeat', '')->once();
+        $filesystem->shouldReceive('put')->with('/tmp/heartbeat', '2019-02-15 08:00:00')->once();
 
         $this->app[Filesystem::class] = $filesystem;
 
@@ -100,8 +106,10 @@ class HeartbeatTest extends TestCase
 
     public function testCommandQueued()
     {
+        Carbon::setTestNow('2019-02-15 08:00:00');
+
         $filesystem = m::mock(FilesystemAdapter::class);
-        $filesystem->shouldReceive('put')->with('/tmp/heartbeat', '')->once();
+        $filesystem->shouldReceive('put')->with('/tmp/heartbeat', '2019-02-15 08:00:00')->once();
 
         $this->app[Filesystem::class] = $filesystem;
 
