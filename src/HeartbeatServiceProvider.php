@@ -2,6 +2,7 @@
 
 namespace Exolnet\Heartbeat;
 
+use Exolnet\Heartbeat\Jobs\HeartbeatJob;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Support\ServiceProvider;
 
@@ -46,7 +47,7 @@ class HeartbeatServiceProvider extends ServiceProvider
             /** @var \Illuminate\Console\Scheduling\Schedule $schedule */
             $schedule = $this->app->make(Schedule::class);
 
-            $schedule->command('heartbeat', ['--queue', $preset])->cron($cron);
+            $schedule->job(new HeartbeatJob('preset', $preset))->cron($cron);
         });
     }
 
