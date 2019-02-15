@@ -64,4 +64,31 @@ class HeartbeatTest extends TestCase
 
         Heartbeat::preset('test');
     }
+
+    public function testCommandNow()
+    {
+        $filesystem = m::mock(FilesystemAdapter::class);
+        $filesystem->shouldReceive('put')->with('/tmp/heartbeat', '')->once();
+
+        $this->app[Filesystem::class] = $filesystem;
+
+        $this->artisan('heartbeat', [
+            'channel' => 'file',
+            'options' => ['/tmp/heartbeat'],
+        ]);
+    }
+
+    public function testCommandQueued()
+    {
+        $filesystem = m::mock(FilesystemAdapter::class);
+        $filesystem->shouldReceive('put')->with('/tmp/heartbeat', '')->once();
+
+        $this->app[Filesystem::class] = $filesystem;
+
+        $this->artisan('heartbeat', [
+            '--queue' => true,
+            'channel' => 'file',
+            'options' => ['/tmp/heartbeat'],
+        ]);
+    }
 }
