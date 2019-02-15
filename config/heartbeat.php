@@ -44,5 +44,11 @@ return [
                 //
             ],
         ],
+
+        'disk' => [
+            'channel' => 'disk',
+            'disk' => 'local',
+            'file' => 'disk.heartbeat',
+        ],
     ],
 ];

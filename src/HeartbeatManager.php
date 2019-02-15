@@ -36,6 +36,16 @@ class HeartbeatManager extends Manager
     }
 
     /**
+     * Create an instance of the disk driver.
+     *
+     * @return \Exolnet\Heartbeat\Channels\DiskChannel
+     */
+    protected function createDiskDriver()
+    {
+        return $this->app->make(Channels\DiskChannel::class);
+    }
+
+    /**
      * Create an instance of the file driver.
      *
      * @return \Exolnet\Heartbeat\Channels\FileChannel

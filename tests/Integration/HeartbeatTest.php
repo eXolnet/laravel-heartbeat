@@ -2,8 +2,10 @@
 
 namespace Exolnet\Heartbeat\Tests\Integration;
 
+use Carbon\Carbon;
 use Exolnet\Heartbeat\HeartbeatFacade as Heartbeat;
 use GuzzleHttp\Client as HttpClient;
+use Illuminate\Contracts\Filesystem\Factory;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Filesystem\FilesystemAdapter;
 use Mockery as m;
@@ -19,6 +21,24 @@ class HeartbeatTest extends TestCase
         $heartbeat2 = $this->app->make(Heartbeat::class);
 
         $this->assertEquals($heartbeat1, $heartbeat2);
+    }
+
+    /**
+     * @return void
+     */
+    public function testDiskSignal()
+    {
+        Carbon::setTestNow('2019-02-15 08:00:00');
+
+        $filesystem = m::mock(FilesystemAdapter::class);
+        $filesystem->shouldReceive('put')->with('disk.heartbeat', '2019-02-15 08:00:00')->once();
+
+        $filesystemFactory = m::mock(Factory::class);
+        $filesystemFactory->shouldReceive('disk')->with('local')->once()->andReturn($filesystem);
+
+        $this->app[Factory::class] = $filesystemFactory;
+
+        Heartbeat::disk('disk.heartbeat', 'local');
     }
 
     /**
