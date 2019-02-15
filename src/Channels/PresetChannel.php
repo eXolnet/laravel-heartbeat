@@ -4,6 +4,7 @@ namespace Exolnet\Heartbeat\Channels;
 
 use Exolnet\Heartbeat\HeartbeatFacade as Heartbeat;
 use Illuminate\Contracts\Container\Container;
+use InvalidArgumentException;
 
 class PresetChannel
 {
@@ -26,15 +27,25 @@ class PresetChannel
      */
     public function signal($preset)
     {
-        $config  = config('heartbeat.presets.'. $preset);
-
-        if (! is_array($config)) {
-            throw new \InvalidArgumentException('Unknown heartbeat preset "'. $preset .'".');
-        }
-
+        $config  = $this->getPreset($preset);
         $name    = $config['channel'] ?? null;
         $channel = Heartbeat::channel($name);
 
         $this->app->call([$channel, 'signal'], $config);
+    }
+
+    /**
+     * @param string $preset
+     * @return array
+     */
+    protected function getPreset($preset)
+    {
+        $config = $this->app->make('config')->get('heartbeat.presets.'. $preset);
+
+        if (! is_array($config)) {
+            throw new InvalidArgumentException('Unknown heartbeat preset "'. $preset .'".');
+        }
+
+        return $config;
     }
 }
