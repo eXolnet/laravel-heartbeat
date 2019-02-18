@@ -43,6 +43,8 @@ be configured for this package. The default configuration file [can be found her
 
 ### Sending Signals
 
+#### Using The Heartbeat Facade
+
 You may send heartbeat signals via the `Heartbeat` facade. To do so, specify the channel you want to use and call the
 `signal` method with the arguments required by this channel. For example, with the `Http` channel, it may look like
 this:
