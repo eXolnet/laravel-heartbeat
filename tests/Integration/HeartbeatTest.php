@@ -5,6 +5,7 @@ namespace Exolnet\Heartbeat\Tests\Integration;
 use Carbon\Carbon;
 use Exolnet\Heartbeat\HeartbeatException;
 use Exolnet\Heartbeat\HeartbeatFacade as Heartbeat;
+use Exolnet\Heartbeat\Tests\Mocks\CustomChannel;
 use GuzzleHttp\Client as HttpClient;
 use Illuminate\Contracts\Filesystem\Factory;
 use Illuminate\Contracts\Filesystem\Filesystem;
@@ -134,5 +135,18 @@ class HeartbeatTest extends TestCase
             'channel' => 'file',
             'options' => ['/tmp/heartbeat'],
         ]);
+    }
+
+    public function testCustomChannel()
+    {
+        $channel = m::mock(CustomChannel::class);
+
+        Heartbeat::extend('custom', function ($app) use ($channel) {
+            return $channel;
+        });
+
+        $channel->shouldReceive('signal')->with('someOption', ['more' => 'options'])->once();
+
+        Heartbeat::custom('someOption', ['more' => 'options']);
     }
 }
