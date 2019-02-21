@@ -5,11 +5,7 @@ namespace Exolnet\Heartbeat\Tests\Integration;
 use Carbon\Carbon;
 use Exolnet\Heartbeat\HeartbeatException;
 use Exolnet\Heartbeat\HeartbeatFacade as Heartbeat;
-use Exolnet\Heartbeat\Tests\Mocks\CustomChannel;
-use GuzzleHttp\Client as HttpClient;
-use Illuminate\Contracts\Filesystem\Factory;
-use Illuminate\Contracts\Filesystem\Filesystem;
-use Illuminate\Filesystem\FilesystemAdapter;
+use Illuminate\Filesystem\Filesystem;
 use Mockery as m;
 
 class HeartbeatTest extends TestCase
@@ -38,78 +34,12 @@ class HeartbeatTest extends TestCase
     /**
      * @return void
      */
-    public function testDiskSignal()
-    {
-        $date = Carbon::parse('2019-02-15 08:00:00');
-        Carbon::setTestNow($date);
-
-        $filesystem = m::mock(FilesystemAdapter::class);
-        $filesystem->shouldReceive('put')->with('disk.heartbeat', '2019-02-15 08:00:00')->once();
-
-        $filesystemFactory = m::mock(Factory::class);
-        $filesystemFactory->shouldReceive('disk')->with('local')->once()->andReturn($filesystem);
-
-        $this->app[Factory::class] = $filesystemFactory;
-
-        Heartbeat::disk('disk.heartbeat', 'local');
-    }
-
-    /**
-     * @return void
-     */
-    public function testFileSignal()
-    {
-        $date = Carbon::parse('2019-02-15 08:00:00');
-        Carbon::setTestNow($date);
-
-        $filesystem = m::mock(FilesystemAdapter::class);
-        $filesystem->shouldReceive('put')->with('/tmp/heartbeat', '2019-02-15 08:00:00')->once();
-
-        $this->app[Filesystem::class] = $filesystem;
-
-        Heartbeat::file('/tmp/heartbeat');
-    }
-
-    /**
-     * @return void
-     */
-    public function testHttpSignal()
-    {
-        $http = m::mock(HttpClient::class);
-        $http->shouldReceive('request')->with('get', 'https://beats.envoyer.io/heartbeat/example', [])->once();
-
-        $this->app[HttpClient::class] = $http;
-
-        Heartbeat::http('https://beats.envoyer.io/heartbeat/example');
-    }
-
-    /**
-     * @return void
-     */
-    public function testPresetSignal()
-    {
-        $date = Carbon::parse('2019-02-15 08:00:00');
-        Carbon::setTestNow($date);
-
-        config()->set('heartbeat.presets.test', [
-            'channel' => 'file',
-            'file' => '/tmp/heartbeat',
-        ]);
-
-        $filesystem = m::mock(FilesystemAdapter::class);
-        $filesystem->shouldReceive('put')->with('/tmp/heartbeat', '2019-02-15 08:00:00')->once();
-
-        $this->app[Filesystem::class] = $filesystem;
-
-        Heartbeat::preset('test');
-    }
-
     public function testCommandNow()
     {
         $date = Carbon::parse('2019-02-15 08:00:00');
         Carbon::setTestNow($date);
 
-        $filesystem = m::mock(FilesystemAdapter::class);
+        $filesystem = m::mock(Filesystem::class);
         $filesystem->shouldReceive('put')->with('/tmp/heartbeat', '2019-02-15 08:00:00')->once();
 
         $this->app[Filesystem::class] = $filesystem;
@@ -120,12 +50,15 @@ class HeartbeatTest extends TestCase
         ]);
     }
 
+    /**
+     * @return void
+     */
     public function testCommandQueued()
     {
         $date = Carbon::parse('2019-02-15 08:00:00');
         Carbon::setTestNow($date);
 
-        $filesystem = m::mock(FilesystemAdapter::class);
+        $filesystem = m::mock(Filesystem::class);
         $filesystem->shouldReceive('put')->with('/tmp/heartbeat', '2019-02-15 08:00:00')->once();
 
         $this->app[Filesystem::class] = $filesystem;
@@ -135,18 +68,5 @@ class HeartbeatTest extends TestCase
             'channel' => 'file',
             'options' => ['/tmp/heartbeat'],
         ]);
-    }
-
-    public function testCustomChannel()
-    {
-        $channel = m::mock(CustomChannel::class);
-
-        Heartbeat::extend('custom', function ($app) use ($channel) {
-            return $channel;
-        });
-
-        $channel->shouldReceive('signal')->with('someOption', ['more' => 'options'])->once();
-
-        Heartbeat::custom('someOption', ['more' => 'options']);
     }
 }
