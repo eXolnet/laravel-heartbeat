@@ -40,4 +40,14 @@ class HeartbeatJob implements ShouldQueue
     {
         Heartbeat::channel($this->channel)->signal(...$this->options);
     }
+
+    /**
+     * Get the tags that should be assigned to the job.
+     *
+     * @return array
+     */
+    public function tags()
+    {
+        return ['heartbeat', 'monitoring'];
+    }
 }
