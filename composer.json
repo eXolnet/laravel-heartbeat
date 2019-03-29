@@ -21,7 +21,8 @@
         }
     ],
     "require": {
-        "php": "^7.1"
+        "php": "^7.1",
+        "laravel/framework": "5.5.*|5.6.*|5.7.*|5.8.*"
     },
     "require-dev": {
         "guzzlehttp/guzzle": "^6.3",
