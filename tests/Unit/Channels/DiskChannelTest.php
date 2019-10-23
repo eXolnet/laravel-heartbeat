@@ -45,7 +45,9 @@ class DiskChannelTest extends UnitTest
      */
     public function testSignal()
     {
-        Carbon::setTestNow('2019-10-23 09:25:23');
+        Carbon::setTestNow(
+            Carbon::parse('2019-10-23 09:25:23')
+        );
 
         $this->filesystem->shouldReceive('disk->put')->with('foo.txt', '2019-10-23 09:25:23');
 
