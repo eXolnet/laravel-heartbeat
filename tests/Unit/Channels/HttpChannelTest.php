@@ -48,7 +48,5 @@ class HttpChannelTest extends UnitTest
         $this->httpClient->shouldReceive('request')->with('get', 'https://foo.bar', []);
 
         $this->channel->signal('https://foo.bar');
-
-        $this->assertTrue(true);
     }
 }

@@ -50,7 +50,5 @@ class DiskChannelTest extends UnitTest
         $this->filesystem->shouldReceive('disk->put')->with('foo.txt', '2019-10-23 09:25:23');
 
         $this->channel->signal('foo.txt');
-
-        $this->assertTrue(true);
     }
 }
