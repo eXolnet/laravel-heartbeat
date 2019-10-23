@@ -23,7 +23,7 @@ class FileChannel
      * @param string $file
      * @return void
      */
-    public function signal($file)
+    public function signal($file): void
     {
         $this->filesystem->put($file, now()->toDateTimeString());
     }

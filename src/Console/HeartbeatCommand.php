@@ -25,7 +25,7 @@ class HeartbeatCommand extends Command
     /**
      * @return void
      */
-    public function handle()
+    public function handle(): void
     {
         $channel = $this->argument('channel');
         $options = $this->argument('options');

@@ -22,7 +22,7 @@ class HeartbeatManager extends Manager
      *
      * @return \Exolnet\Heartbeat\Channels\DiskChannel
      */
-    protected function createDiskDriver()
+    protected function createDiskDriver(): Channels\DiskChannel
     {
         return $this->app->make(Channels\DiskChannel::class);
     }
@@ -32,7 +32,7 @@ class HeartbeatManager extends Manager
      *
      * @return \Exolnet\Heartbeat\Channels\FileChannel
      */
-    protected function createFileDriver()
+    protected function createFileDriver(): Channels\FileChannel
     {
         return $this->app->make(Channels\FileChannel::class);
     }
@@ -42,7 +42,7 @@ class HeartbeatManager extends Manager
      *
      * @return \Exolnet\Heartbeat\Channels\HttpChannel
      */
-    protected function createHttpDriver()
+    protected function createHttpDriver(): Channels\HttpChannel
     {
         return $this->app->make(Channels\HttpChannel::class);
     }
@@ -52,7 +52,7 @@ class HeartbeatManager extends Manager
      *
      * @return \Exolnet\Heartbeat\Channels\PresetChannel
      */
-    protected function createPresetDriver()
+    protected function createPresetDriver(): Channels\PresetChannel
     {
         return $this->app->make(Channels\PresetChannel::class);
     }
@@ -62,7 +62,7 @@ class HeartbeatManager extends Manager
      *
      * @return string
      */
-    public function getDefaultDriver()
+    public function getDefaultDriver(): string
     {
         throw new HeartbeatException('Heartbeat does not support default driver/channel.');
     }
@@ -72,7 +72,7 @@ class HeartbeatManager extends Manager
      * @param array $parameters
      * @return void
      */
-    public function __call($method, $parameters)
+    public function __call($method, $parameters): void
     {
         $this->channel($method)->signal(...$parameters);
     }

@@ -29,7 +29,7 @@ class HttpChannel
      * @param array $options
      * @return void
      */
-    public function signal($url, array $options = [])
+    public function signal($url, array $options = []): void
     {
         $method = $options['method'] ?? 'get';
 

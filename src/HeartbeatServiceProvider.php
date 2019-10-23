@@ -11,7 +11,7 @@ class HeartbeatServiceProvider extends ServiceProvider
     /**
      * Bootstrap the application services.
      */
-    public function boot()
+    public function boot(): void
     {
         $this->publishes([
             $this->getConfigFile() => config_path('heartbeat.php'),
@@ -23,7 +23,7 @@ class HeartbeatServiceProvider extends ServiceProvider
     /**
      * Register the application services.
      */
-    public function register()
+    public function register(): void
     {
         $this->mergeConfigFrom($this->getConfigFile(), 'heartbeat');
 
@@ -34,7 +34,7 @@ class HeartbeatServiceProvider extends ServiceProvider
     /**
      * @return void
      */
-    protected function scheduleQueueCheck()
+    protected function scheduleQueueCheck(): void
     {
         $preset = config('heartbeat.job_schedule.preset');
         $cron   = config('heartbeat.job_schedule.cron');
@@ -54,7 +54,7 @@ class HeartbeatServiceProvider extends ServiceProvider
     /**
      * @return void
      */
-    protected function registerHeartbeat()
+    protected function registerHeartbeat(): void
     {
         $this->app->singleton('heartbeat', function () {
             return new HeartbeatManager($this->app);
@@ -64,7 +64,7 @@ class HeartbeatServiceProvider extends ServiceProvider
     /**
      * @return void
      */
-    protected function registerCommands()
+    protected function registerCommands(): void
     {
         if (! $this->app->runningInConsole()) {
             return;
@@ -77,7 +77,7 @@ class HeartbeatServiceProvider extends ServiceProvider
     /**
      * @return string
      */
-    protected function getConfigFile()
+    protected function getConfigFile(): string
     {
         return __DIR__ .
             DIRECTORY_SEPARATOR . '..' .
