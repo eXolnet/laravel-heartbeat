@@ -12,7 +12,7 @@ class HeartbeatManager extends Manager
      * @param  string  $name
      * @return mixed
      */
-    public function channel($name)
+    public function channel(string $name)
     {
         return $this->driver($name);
     }

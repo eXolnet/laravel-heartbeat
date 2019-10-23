@@ -27,7 +27,7 @@ class HeartbeatJob implements ShouldQueue
      * @param string $channel
      * @param array ...$options
      */
-    public function __construct($channel, ...$options)
+    public function __construct(string $channel, ...$options)
     {
         $this->channel = $channel;
         $this->options = $options;

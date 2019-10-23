@@ -25,7 +25,7 @@ class PresetChannel
      * @param string $preset
      * @return void
      */
-    public function signal($preset): void
+    public function signal(string $preset): void
     {
         $config  = $this->getPreset($preset);
         $name    = $config['channel'] ?? null;
@@ -38,7 +38,7 @@ class PresetChannel
      * @param string $preset
      * @return array
      */
-    protected function getPreset($preset): array
+    protected function getPreset(string $preset): array
     {
         $config = $this->app->make('config')->get('heartbeat.presets.'. $preset);
 

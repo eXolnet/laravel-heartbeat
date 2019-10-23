@@ -24,7 +24,7 @@ class DiskChannel
      * @param string|null $disk
      * @return void
      */
-    public function signal($file, $disk = null): void
+    public function signal(string $file, string $disk = null): void
     {
         $this->filesystem->disk($disk)->put($file, now()->toDateTimeString());
     }
