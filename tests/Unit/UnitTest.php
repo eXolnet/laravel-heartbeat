@@ -2,6 +2,7 @@
 
 namespace Exolnet\Heartbeat\Tests\Unit;
 
+use Illuminate\Support\Carbon;
 use Mockery;
 use PHPUnit\Framework\TestCase;
 
@@ -15,6 +16,10 @@ abstract class UnitTest extends TestCase
             }
 
             Mockery::close();
+        }
+
+        if (class_exists(Carbon::class)) {
+            Carbon::setTestNow();
         }
     }
 }
