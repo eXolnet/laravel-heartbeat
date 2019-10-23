@@ -9,7 +9,7 @@ use Illuminate\Contracts\Config\Repository;
 use InvalidArgumentException;
 use Mockery as m;
 
-class PresetTest extends UnitTest
+class PresetChannelTest extends UnitTest
 {
     /**
      * @var \Mockery\MockInterface
