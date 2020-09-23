@@ -2,6 +2,7 @@
 
 namespace Exolnet\Heartbeat;
 
+use Illuminate\Contracts\Container\Container;
 use Illuminate\Support\Manager;
 
 class HeartbeatManager extends Manager
@@ -24,7 +25,7 @@ class HeartbeatManager extends Manager
      */
     protected function createDiskDriver(): Channels\DiskChannel
     {
-        return $this->app->make(Channels\DiskChannel::class);
+        return $this->getContainer()->make(Channels\DiskChannel::class);
     }
 
     /**
@@ -34,7 +35,7 @@ class HeartbeatManager extends Manager
      */
     protected function createFileDriver(): Channels\FileChannel
     {
-        return $this->app->make(Channels\FileChannel::class);
+        return $this->getContainer()->make(Channels\FileChannel::class);
     }
 
     /**
@@ -44,7 +45,7 @@ class HeartbeatManager extends Manager
      */
     protected function createHttpDriver(): Channels\HttpChannel
     {
-        return $this->app->make(Channels\HttpChannel::class);
+        return $this->getContainer()->make(Channels\HttpChannel::class);
     }
 
     /**
@@ -54,7 +55,7 @@ class HeartbeatManager extends Manager
      */
     protected function createPresetDriver(): Channels\PresetChannel
     {
-        return $this->app->make(Channels\PresetChannel::class);
+        return $this->getContainer()->make(Channels\PresetChannel::class);
     }
 
     /**
@@ -75,5 +76,13 @@ class HeartbeatManager extends Manager
     public function __call($method, $parameters): void
     {
         $this->channel($method)->signal(...$parameters);
+    }
+
+    /**
+     * @return \Illuminate\Contracts\Container\Container
+     */
+    protected function getContainer(): Container
+    {
+        return $this->container ?? $this->app;
     }
 }
