@@ -13,6 +13,16 @@ class HeartbeatJob implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable;
 
     /**
+     * @var int
+     */
+    public $tries = 3;
+
+    /**
+     * @var int
+     */
+    public $maxExceptions = 1;
+
+    /**
      * @var string
      */
     public $channel;
