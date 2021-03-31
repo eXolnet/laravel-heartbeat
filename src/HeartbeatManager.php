@@ -25,7 +25,7 @@ class HeartbeatManager extends Manager
      */
     protected function createDiskDriver(): Channels\DiskChannel
     {
-        return $this->getContainer()->make(Channels\DiskChannel::class);
+        return $this->getContainerOrApp()->make(Channels\DiskChannel::class);
     }
 
     /**
@@ -35,7 +35,7 @@ class HeartbeatManager extends Manager
      */
     protected function createFileDriver(): Channels\FileChannel
     {
-        return $this->getContainer()->make(Channels\FileChannel::class);
+        return $this->getContainerOrApp()->make(Channels\FileChannel::class);
     }
 
     /**
@@ -45,7 +45,7 @@ class HeartbeatManager extends Manager
      */
     protected function createHttpDriver(): Channels\HttpChannel
     {
-        return $this->getContainer()->make(Channels\HttpChannel::class);
+        return $this->getContainerOrApp()->make(Channels\HttpChannel::class);
     }
 
     /**
@@ -55,7 +55,7 @@ class HeartbeatManager extends Manager
      */
     protected function createPresetDriver(): Channels\PresetChannel
     {
-        return $this->getContainer()->make(Channels\PresetChannel::class);
+        return $this->getContainerOrApp()->make(Channels\PresetChannel::class);
     }
 
     /**
@@ -81,7 +81,7 @@ class HeartbeatManager extends Manager
     /**
      * @return \Illuminate\Contracts\Container\Container
      */
-    protected function getContainer(): Container
+    protected function getContainerOrApp(): Container
     {
         return $this->container ?? $this->app;
     }
