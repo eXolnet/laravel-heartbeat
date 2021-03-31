@@ -81,7 +81,7 @@ class HeartbeatManager extends Manager
     /**
      * @return \Illuminate\Contracts\Container\Container
      */
-    protected function getContainer(): Container
+    public function getContainer(): Container
     {
         return $this->container ?? $this->app;
     }
