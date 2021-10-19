@@ -11,13 +11,15 @@
     "authors": [
         {
             "name": "Alexandre D'Eschambeault",
-            "homepage": "https://www.exolnet.com",
-            "role": "Developer"
+            "email": "adeschambeault@exolnet.com"
+        },
+        {
+            "name": "Pat Gagnon-Renaud",
+            "email": "pgrenaud@exolnet.com"
         },
         {
             "name": "Simon Gaudreau",
-            "homepage": "https://www.exolnet.com",
-            "role": "Developer"
+            "email": "sgaudreau@exolnet.com"
         }
     ],
     "require": {
