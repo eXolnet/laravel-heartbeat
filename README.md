@@ -17,13 +17,13 @@ composer require exolnet/laravel-heartbeat
 
 If you don't use package auto-discovery, add the service provider to the ``providers`` array in `config/app.php`:
 
-```
+```php
 Exolnet\Heartbeat\HeartbeatServiceProvider::class
 ```
 
 And the facade to the ``facades`` array in `config/app.php`: 
 
-```
+```php
 'Heartbeat' => Exolnet\Heartbeat\HeartbeatFacade::class
 ```
 
@@ -58,7 +58,7 @@ driver method directly:
 
 ```php
 Heartbeat::http('https://beats.envoyer.io/heartbeat/example');
-``` 
+```
 
 #### Using Artisan
 
@@ -75,7 +75,7 @@ php artisan heartbeat http https://beats.envoyer.io/heartbeat/example
 The handy `preset` channel allows you to define all your heartbeat configuration in the configuration file. First, let's
 look at an example of a `preset` configuration:
 
-```
+```php
 'presets' => [
     'envoyer' => [
         'channel' => 'http',
@@ -103,12 +103,15 @@ To configure this, just publish the package configuration and update the `queue`
 ### Available Channels
 
 #### Disk
+
 Channel used to store heartbeats in a Laravel Filesystem disk.
 
 #### File
+
 Channel used to store heartbeats in a file
 
 #### Http
+
 Channel used to make a heartbeat by calling a url
 
 ### Custom Channels
@@ -168,14 +171,13 @@ Finally, you can now use your driver like native one:
 
 ```php
 Heartbeat::custom('someOption', ['more' => 'options']);
-``` 
-
+```
 
 ## Testing
 
 To run the phpUnit tests, please use:
 
-``` bash
+```bash
 composer test
 ```
 
