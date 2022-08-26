@@ -4,7 +4,7 @@ namespace Exolnet\Heartbeat\Tests\Integration;
 
 use Carbon\Carbon;
 use Exolnet\Heartbeat\HeartbeatFacade as Heartbeat;
-use \Illuminate\Filesystem\Filesystem;
+use Illuminate\Filesystem\Filesystem;
 use Mockery as m;
 
 class FileTest extends TestCase

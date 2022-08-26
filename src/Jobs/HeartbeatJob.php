@@ -10,7 +10,9 @@ use Illuminate\Foundation\Bus\Dispatchable;
 
 class HeartbeatJob implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable;
+    use Dispatchable;
+    use InteractsWithQueue;
+    use Queueable;
 
     /**
      * @var int

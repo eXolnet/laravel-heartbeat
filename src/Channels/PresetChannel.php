@@ -40,10 +40,10 @@ class PresetChannel
      */
     protected function getPreset(string $preset): array
     {
-        $config = $this->app->make('config')->get('heartbeat.presets.'. $preset);
+        $config = $this->app->make('config')->get('heartbeat.presets.' . $preset);
 
         if (! is_array($config)) {
-            throw new InvalidArgumentException('Unknown heartbeat preset "'. $preset .'".');
+            throw new InvalidArgumentException('Unknown heartbeat preset "' . $preset . '".');
         }
 
         return $config;
