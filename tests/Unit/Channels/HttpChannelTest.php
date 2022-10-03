@@ -2,7 +2,6 @@
 
 namespace Exolnet\Heartbeat\Tests\Unit\Channels;
 
-use Carbon\Carbon;
 use Exolnet\Heartbeat\Channels\HttpChannel;
 use Exolnet\Heartbeat\Tests\Unit\UnitTest;
 use GuzzleHttp\Client as HttpClient;
