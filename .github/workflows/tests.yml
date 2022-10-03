@@ -9,7 +9,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        php: [7.3, 7.4, 8.0, 8.1]
+        php: [8.0, 8.1]
         laravel: [8.*, 9.*]
         guzzle: [6.*, 7.*]
         dependency-version: [prefer-lowest, prefer-stable]
@@ -17,10 +17,6 @@ jobs:
           - php: 8.1
             laravel: 8.*
             dependency-version: prefer-lowest
-          - php: 7.3
-            laravel: 9.*
-          - php: 7.4
-            laravel: 9.*
           - guzzle: 6.*
             laravel: 9.*
         include:
