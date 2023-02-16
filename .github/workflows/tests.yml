@@ -9,11 +9,20 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        php: [8.0, 8.1]
+        php: [8.0, 8.1, 8.2]
         laravel: [9.*]
         dependency-version: [prefer-lowest, prefer-stable]
+        exclude:
+          - php: 8.2
+            laravel: 9.*
+            dependency-version: prefer-lowest
         include:
           - laravel: 9.*
+            testbench: 7.*
+          # Laravel only support PHP 8.2 from v9.43
+          - php: 8.2
+            laravel: ^9.43
+            dependency-version: prefer-lowest
             testbench: 7.*
 
     name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.dependency-version }}
