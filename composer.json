@@ -24,13 +24,13 @@
     ],
     "require": {
         "php": "^8.0",
-        "laravel/framework": "^9.0"
+        "laravel/framework": "^9.0|^10.0"
     },
     "require-dev": {
         "guzzlehttp/guzzle": "^7.0",
         "laravel/pint": "^1.2",
         "mockery/mockery": "^1.4",
-        "orchestra/testbench": "^7.0",
+        "orchestra/testbench": "^7.0|^8.0",
         "phpunit/phpunit": "^9.3.3",
         "squizlabs/php_codesniffer": "^3.6"
     },
