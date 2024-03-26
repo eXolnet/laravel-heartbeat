@@ -6,7 +6,7 @@ use Illuminate\Support\Carbon;
 use Mockery;
 use PHPUnit\Framework\TestCase;
 
-abstract class UnitTest extends TestCase
+abstract class UnitTestCase extends TestCase
 {
     public function tearDown(): void
     {

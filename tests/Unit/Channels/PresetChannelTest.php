@@ -3,13 +3,13 @@
 namespace Exolnet\Heartbeat\Tests\Unit\Channels;
 
 use Exolnet\Heartbeat\Channels\PresetChannel;
-use Exolnet\Heartbeat\Tests\Unit\UnitTest;
+use Exolnet\Heartbeat\Tests\Unit\UnitTestCase;
 use Illuminate\Container\Container;
 use Illuminate\Contracts\Config\Repository;
 use InvalidArgumentException;
 use Mockery as m;
 
-class PresetChannelTest extends UnitTest
+class PresetChannelTest extends UnitTestCase
 {
     /**
      * @var \Mockery\MockInterface

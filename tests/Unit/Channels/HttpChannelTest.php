@@ -3,11 +3,11 @@
 namespace Exolnet\Heartbeat\Tests\Unit\Channels;
 
 use Exolnet\Heartbeat\Channels\HttpChannel;
-use Exolnet\Heartbeat\Tests\Unit\UnitTest;
+use Exolnet\Heartbeat\Tests\Unit\UnitTestCase;
 use GuzzleHttp\Client as HttpClient;
 use Mockery as m;
 
-class HttpChannelTest extends UnitTest
+class HttpChannelTest extends UnitTestCase
 {
     /**
      * @var \Mockery\MockInterface|\Illuminate\Filesystem\Filesystem

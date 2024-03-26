@@ -4,11 +4,11 @@ namespace Exolnet\Heartbeat\Tests\Unit\Channels;
 
 use Carbon\Carbon;
 use Exolnet\Heartbeat\Channels\DiskChannel;
-use Exolnet\Heartbeat\Tests\Unit\UnitTest;
+use Exolnet\Heartbeat\Tests\Unit\UnitTestCase;
 use Illuminate\Contracts\Filesystem\Factory as Filesystem;
 use Mockery as m;
 
-class DiskChannelTest extends UnitTest
+class DiskChannelTest extends UnitTestCase
 {
     /**
      * @var \Mockery\MockInterface|\Illuminate\Contracts\Filesystem\Factory
