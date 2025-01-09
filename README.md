@@ -198,5 +198,7 @@ If you discover any security-related issues, please email security@exolnet.com i
 
 ## License
 
-This code is licensed under the [MIT license](http://choosealicense.com/licenses/mit/). 
+Copyright © [eXolnet](https://www.exolnet.com). All rights reserved.
+
+This code is licensed under the [MIT license](http://choosealicense.com/licenses/mit/).
 Please see the [license file](LICENSE) for more information.
