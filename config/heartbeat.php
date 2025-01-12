@@ -27,6 +27,16 @@ return [
             ],
         ],
 
+        'newrelic' => [
+           'channel' => 'newrelic',
+           'account' => '587431', // Fake newrelic account ID
+           'key' => '1f2d4c5a6b8e9f0a1b2c3d4e5f6a7b8c', // Fake newrelic API key
+           'eventType' => 'HeartbeatEvent', // Event name
+           'eventData' => [
+               //
+           ]
+        ],
+
         'disk' => [
             'channel' => 'disk',
             'disk' => 'local',
