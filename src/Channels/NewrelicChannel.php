@@ -29,7 +29,7 @@ class NewrelicChannel
      * @param string $key
      * @param string $eventType
      * @param array $eventData
-     * @return voids
+     * @return void
      */
     public function signal(string $account, string $key, string $eventType, array $eventData = []): void
     {
@@ -42,7 +42,7 @@ class NewrelicChannel
             ],
             'json' => [
                 'eventType' => $eventType,
-                ...$eventData
+                ...$eventData,
             ],
         ]);
     }
