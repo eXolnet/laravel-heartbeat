@@ -16,12 +16,12 @@ return [
     'presets' => [
         'file' => [
             'channel' => 'file',
-            'file' => '/tmp/file.heartbeat',
+            'file' => env('HEARTBEAT_FILE', '/tmp/file.heartbeat'),
         ],
 
         'http' => [
             'channel' => 'http',
-            'url' => 'https://beats.envoyer.io/heartbeat/example',
+            'url' => env('HEARTBEAT_URL', 'https://beats.envoyer.io/heartbeat/example'),
             'options' => [
                 //
             ],
@@ -29,24 +29,8 @@ return [
 
         'disk' => [
             'channel' => 'disk',
-            'disk' => 'local',
-            'file' => 'disk.heartbeat',
-        ],
-
-        /*
-        |--------------------------------------------------------------------------
-        | Queue preset
-        |--------------------------------------------------------------------------
-        |
-        | Here is a default configuration that could be used to monitor your queue system.
-        | See configuration option `job_schedule` below.
-        |
-        */
-
-        'queue' => [
-            'channel' => 'disk',
-            'disk' => 'local',
-            'file' => 'queue.heartbeat',
+            'disk' => env('HEARTBEAT_DISK', env('FILESYSTEM_DISK', 'local')),
+            'file' => env('HEARTBEAT_DISK_FILE', 'disk.heartbeat'),
         ],
     ],
 
@@ -63,7 +47,7 @@ return [
     */
 
     'job_schedule' => [
-        'preset' => env('HEARTBEAT_JOB_SCHEDULE_PRESET', 'queue'),
+        'preset' => env('HEARTBEAT_JOB_SCHEDULE_PRESET', 'disk'),
 
         'cron' => env('HEARTBEAT_JOB_SCHEDULE_CRON', '*/15 * * * *'),
     ],
