@@ -19,7 +19,7 @@ class NewrelicChannelTest extends UnitTestCase
      */
     protected $channel;
 
-     /**
+    /**
      * @var string
      */
     protected $url;
@@ -79,7 +79,8 @@ class NewrelicChannelTest extends UnitTestCase
             ],
             'json' => [
                 'eventType' => $this->eventType
-            ]];
+            ]
+        ];
 
         $this->httpClient->shouldReceive('request')->with('post', $this->url, $options);
 
