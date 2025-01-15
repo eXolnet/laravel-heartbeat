@@ -27,6 +27,16 @@ return [
             ],
         ],
 
+        'newrelic' => [
+           'channel' => 'newrelic',
+           'account' => env('HEARTBEAT_NEWRELIC_ACCOUNT'),
+           'key' => env('HEARTBEAT_NEWRELIC_KEY'),
+           'eventType' => env('HEARTBEAT_NEWRELIC_EVENT_TYPE', 'HeartbeatEvent'),
+           'eventData' => [
+               //
+           ]
+        ],
+
         'disk' => [
             'channel' => 'disk',
             'disk' => env('HEARTBEAT_DISK', env('FILESYSTEM_DISK', 'local')),
