@@ -70,6 +70,15 @@ php artisan heartbeat preset preset-name
 php artisan heartbeat http https://beats.envoyer.io/heartbeat/example
 ```
 
+Add the `--queue` flag to dispatch the signal as a queued job instead of sending it immediately. You may also choose
+the queue and the connection on which the job is dispatched with `--on-queue` and `--on-connection` (both imply
+`--queue`):
+
+```bash
+php artisan heartbeat --queue preset preset-name
+php artisan heartbeat --on-connection=redis --on-queue=high preset preset-name
+```
+
 ### Specifying Presets
 
 The handy `preset` channel allows you to define all your heartbeat configuration in the configuration file. First, let's
@@ -98,7 +107,30 @@ Heartbeat can also be used to monitor your Laravel queue system. This feature is
 Laravel's scheduler enabled. The preset `queue` is used and a file named `queue.heartbeat` will be created in your
 `storage/app` folder every fifteen minutes.
 
-To configure this, just publish the package configuration and update the `queue` preset.
+To configure this, publish the package configuration and update the `job_schedule` option. You may specify the
+connection and the queue on which the job is dispatched (`null` uses your application's defaults):
+
+```php
+'job_schedule' => [
+    'preset' => 'disk',
+    'cron' => '*/15 * * * *',
+    'connection' => 'redis',
+    'queue' => 'high',
+],
+```
+
+To schedule multiple heartbeat jobs, for example to monitor several connections or queues, use a list of entries
+instead:
+
+```php
+'job_schedule' => [
+    ['preset' => 'disk', 'cron' => '*/15 * * * *'],
+    ['preset' => 'http', 'cron' => '*/5 * * * *', 'connection' => 'redis', 'queue' => 'high'],
+],
+```
+
+The `HEARTBEAT_JOB_SCHEDULE_PRESET`, `HEARTBEAT_JOB_SCHEDULE_CRON`, `HEARTBEAT_JOB_SCHEDULE_CONNECTION` and
+`HEARTBEAT_JOB_SCHEDULE_QUEUE` environment variables can also be used with the default configuration.
 
 ### Available Channels
 

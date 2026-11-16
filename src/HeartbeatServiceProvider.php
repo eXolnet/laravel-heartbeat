@@ -36,19 +36,54 @@ class HeartbeatServiceProvider extends ServiceProvider
      */
     protected function scheduleQueueCheck(): void
     {
-        $preset = config('heartbeat.job_schedule.preset');
-        $cron   = config('heartbeat.job_schedule.cron');
+        $jobSchedules = $this->getJobSchedules();
 
-        if (! $preset || ! $cron) {
+        if (! $jobSchedules) {
             return;
         }
 
-        $this->app->booted(function () use ($preset, $cron) {
+        $this->app->booted(function () use ($jobSchedules) {
             /** @var \Illuminate\Console\Scheduling\Schedule $schedule */
             $schedule = $this->app->make(Schedule::class);
 
-            $schedule->job(new HeartbeatJob('preset', $preset))->cron($cron);
+            foreach ($jobSchedules as $jobSchedule) {
+                $schedule->job(
+                    new HeartbeatJob('preset', $jobSchedule['preset']),
+                    $jobSchedule['queue'] ?? null,
+                    $jobSchedule['connection'] ?? null
+                )->cron($jobSchedule['cron']);
+            }
         });
+    }
+
+    /**
+     * Get the valid configured job schedules. Both a single job schedule
+     * (legacy format) and a list of job schedules are supported.
+     *
+     * @return list<array{preset: string, cron: string, connection?: string|null, queue?: string|null}>
+     */
+    protected function getJobSchedules(): array
+    {
+        $config = config('heartbeat.job_schedule');
+
+        if (! is_array($config)) {
+            return [];
+        }
+
+        if (array_is_list($config)) {
+            return array_values(array_filter($config, [$this, 'isValidJobSchedule']));
+        }
+
+        return $this->isValidJobSchedule($config) ? [$config] : [];
+    }
+
+    /**
+     * @param mixed $jobSchedule
+     * @return bool
+     */
+    protected function isValidJobSchedule($jobSchedule): bool
+    {
+        return is_array($jobSchedule) && ! empty($jobSchedule['preset']) && ! empty($jobSchedule['cron']);
     }
 
     /**

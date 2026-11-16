@@ -5,7 +5,9 @@ namespace Exolnet\Heartbeat\Tests\Integration;
 use Carbon\Carbon;
 use Exolnet\Heartbeat\HeartbeatException;
 use Exolnet\Heartbeat\HeartbeatFacade as Heartbeat;
+use Exolnet\Heartbeat\Jobs\HeartbeatJob;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Facades\Queue;
 use Mockery as m;
 
 class HeartbeatTest extends TestCase
@@ -68,5 +70,59 @@ class HeartbeatTest extends TestCase
             'channel' => 'file',
             'options' => ['/tmp/heartbeat'],
         ]);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCommandQueuedOnDefaultConnectionAndQueue()
+    {
+        Queue::fake();
+
+        $this->artisan('heartbeat', [
+            '--queue' => true,
+            'channel' => 'file',
+            'options' => ['/tmp/heartbeat'],
+        ])->assertSuccessful();
+
+        Queue::assertPushed(HeartbeatJob::class, function (HeartbeatJob $job) {
+            return $job->channel === 'file'
+                && $job->options === ['/tmp/heartbeat']
+                && $job->connection === null
+                && $job->queue === null;
+        });
+    }
+
+    /**
+     * @return void
+     */
+    public function testCommandQueuedOnSpecificConnectionAndQueue()
+    {
+        Queue::fake();
+
+        $this->artisan('heartbeat', [
+            '--on-queue' => 'high',
+            '--on-connection' => 'redis',
+            'channel' => 'file',
+            'options' => ['/tmp/heartbeat'],
+        ])->assertSuccessful();
+
+        Queue::assertPushed(HeartbeatJob::class, function (HeartbeatJob $job) {
+            return $job->connection === 'redis' && $job->queue === 'high';
+        });
+    }
+
+    /**
+     * @return void
+     */
+    public function testCommandQueueFlagIsStillParsedAsAFlag()
+    {
+        Queue::fake();
+
+        $this->artisan('heartbeat --queue file /tmp/heartbeat')->assertSuccessful();
+
+        Queue::assertPushed(HeartbeatJob::class, function (HeartbeatJob $job) {
+            return $job->channel === 'file' && $job->options === ['/tmp/heartbeat'] && $job->queue === null;
+        });
     }
 }

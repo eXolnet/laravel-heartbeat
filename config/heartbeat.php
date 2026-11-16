@@ -54,11 +54,24 @@ return [
     | is trigger by Laravel's scheduler and is run asynchronously to validate
     | that the queue system is still working.
     |
+    | The connection and queue on which the job is dispatched may be specified
+    | (null uses the defaults). To schedule multiple heartbeat jobs, e.g. to
+    | monitor several connections or queues, use a list of entries instead:
+    |
+    |   'job_schedule' => [
+    |       ['preset' => 'disk', 'cron' => '0 * * * *'],
+    |       ['preset' => 'http', 'cron' => '* * * * *', 'queue' => 'high'],
+    |   ],
+    |
     */
 
     'job_schedule' => [
         'preset' => env('HEARTBEAT_JOB_SCHEDULE_PRESET', 'disk'),
 
         'cron' => env('HEARTBEAT_JOB_SCHEDULE_CRON', '*/15 * * * *'),
+
+        'connection' => env('HEARTBEAT_JOB_SCHEDULE_CONNECTION'),
+
+        'queue' => env('HEARTBEAT_JOB_SCHEDULE_QUEUE'),
     ],
 ];

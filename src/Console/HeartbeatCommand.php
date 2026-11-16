@@ -13,7 +13,12 @@ class HeartbeatCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'heartbeat {--queue} {channel} {options*}';
+    protected $signature = 'heartbeat
+        {--queue : Dispatch the signal as a queued job}
+        {--on-queue= : The queue on which the job is dispatched (implies --queue)}
+        {--on-connection= : The connection on which the job is dispatched (implies --queue)}
+        {channel}
+        {options*}';
 
     /**
      * The console command description.
@@ -30,8 +35,21 @@ class HeartbeatCommand extends Command
         $channel = $this->argument('channel');
         $options = $this->argument('options');
 
-        if ($this->option('queue')) {
-            dispatch(new HeartbeatJob($channel, ...$options));
+        $queue = $this->option('on-queue');
+        $connection = $this->option('on-connection');
+
+        if ($this->option('queue') || $queue || $connection) {
+            $job = new HeartbeatJob($channel, ...$options);
+
+            if ($queue) {
+                $job->onQueue($queue);
+            }
+
+            if ($connection) {
+                $job->onConnection($connection);
+            }
+
+            dispatch($job);
             return;
         }
 
